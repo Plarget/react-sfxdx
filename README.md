@@ -11,7 +11,5 @@ npm run dev
 - React
 - Vite
 - TypeScript
-- Redux Toolkit
-- SCSS
-- Redux Persist
-- React Query
+- React Router
+- PostCSS
