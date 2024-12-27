@@ -1,4 +1,5 @@
 # Тестовое задание SFXDX
+Сайт: https://willowy-stardust-b98e30.netlify.app/
 
 Для запуска проекта: 
 ```
