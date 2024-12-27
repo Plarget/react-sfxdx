@@ -1,0 +1,109 @@
+@import "@/shared/styles/mixin.pcss";
+@import "@/shared/styles/media.pcss";
+
+.footer {
+    --padding-top-blocks: 10px;
+    border-top: 1px solid var(--color-border-gray);
+    background-color: var(--color-white-dark);
+    padding-top: 50px;
+    padding-bottom: 40px;
+
+    &__body {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        @media (--mobile) {
+            align-items: center;
+            flex-direction: column;
+        }
+    }
+
+
+    &__categories {
+        @media (--mobile) {
+            order: 2;
+            margin-bottom: 30px;
+        }
+
+        &-list {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+
+            @media (--mobile) {
+                order: 2;
+                margin-bottom: 30px;
+                align-items: center;
+            }
+        }
+    }
+
+    &__main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: var(--padding-top-blocks);
+    }
+
+    &__contacts {
+        padding-top: var(--padding-top-blocks);
+
+        @media (--mobile) {
+            order: 3;
+        }
+
+        &-list {
+            display: flex;
+            column-gap: 30px;
+        }
+
+        &-link {
+            --contacts-link-size: 24px;
+            width: var(--contacts-link-size);
+            height: var(--contacts-link-size);
+
+            @media (hover: hover) {
+                &:hover {
+                    & .footer__contacts-icon {
+                         display: none;
+
+                        &.is-color {
+                            display: initial;
+                        }
+                    }
+                }
+            }
+        }
+
+        &-item {
+            display: flex;
+        }
+
+        &-icon {
+            width: 100%;
+            height: 100%;
+
+            &.is-color {
+                display: none;
+            }
+        }
+    }
+
+    &__logo {
+        @media (--mobile) {
+            order: 1;
+            margin-bottom: 60px;
+        }
+
+        @media (--mobile-xs) {
+            width: 120px;
+            height: 20px;
+        }
+    }
+
+    &__copy {
+        display: flex;
+        justify-content: center;
+    }
+}

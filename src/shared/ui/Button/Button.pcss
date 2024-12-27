@@ -1,0 +1,31 @@
+@import "@/shared/styles/mixin.pcss";
+
+.button {
+  @mixin flex-center;
+  color: var(--color-white);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  height: 48px;
+  background-color: var(--color-main);
+  box-shadow: 0 8px 16px 0 var(--color-main-shadow);
+  border-radius: 8px;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  padding-inline: 12px;
+  transition: 0.25s;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-main-light);
+      box-shadow: 0 8px 16px 0 rgba(132, 132, 132, 0.15);
+    }
+  }
+
+
+  &:active {
+    background-color: var(--color-main-dark);
+    box-shadow: 0 8px 16px 0 rgba(132, 132, 132, 0.15);
+  }
+}

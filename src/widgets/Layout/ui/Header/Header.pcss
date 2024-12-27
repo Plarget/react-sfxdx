@@ -1,0 +1,40 @@
+@import "@/shared/styles/mixin.pcss";
+@import "@/shared/styles/media.pcss";
+
+.header {
+    border-bottom: 1px solid var(--color-border-gray);
+    height: 100px;
+
+    @media (--mobile-xs) {
+        border-bottom: 1px solid transparent;
+        height: 70px;
+    }
+
+    &__inner {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);;
+        align-items: center;
+        height: 100%;
+        
+        @media (--mobile) {
+            display: flex;
+            justify-content: space-between;
+            column-gap: 20px;
+        }
+     }
+
+    &__logo {
+        grid-column-start: 2;
+        justify-self: center;
+
+        @media (--mobile-xs) {
+            width: 98px;
+            height: 16px;
+        }
+    }
+
+    &__connect {
+        grid-column-start: 3;
+        justify-self: end;
+    }
+}

@@ -1,0 +1,52 @@
+.visible-mobile {
+  @media (min-width: 768px) {
+    display: none !important;
+  }
+}
+
+.hidden-mobile {
+  @media (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.visible-laptop {
+  @media (min-width: 1025px) {
+    display: none !important;
+  }
+}
+
+.hidden-laptop {
+  @media (max-width: 1024px) {
+    display: none !important;
+  }
+}
+
+.container {
+  --container-padding: 20px;
+  max-width: calc(1300px + var(--container-padding) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+
+  &--small {
+    font-size: 14px;
+  }
+
+  &--gray {
+    color: var(--color-gray);
+  }
+
+  &--gray-light {
+    color: var(--color-gray-light);
+  }
+
+  &--gilroy {
+    font-family: "Gilroy", sans-serif;
+  }
+}

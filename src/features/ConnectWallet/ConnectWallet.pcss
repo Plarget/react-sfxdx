@@ -1,0 +1,68 @@
+@import "@/shared/styles/mixin.pcss";
+@import "@/shared/styles/media.pcss";
+
+.connect-wallet {
+    --icon-metamask-size: 24px;
+    --icon-cope-size: 16px;
+    --width-button: 200px;
+    display: flex;
+    width: 100%;
+    justify-content: end;
+
+    @media (--mobile) {
+        width: var(--width-button);
+    }
+
+    @media (--mobile-xs) {
+        --icon-metamask-size: 18px;
+        --width-button: 177px;
+    }
+
+    &__button, &__profile {
+        max-width: var(--width-button);
+        width: 100%;
+
+        @media (--mobile-xs) {
+            max-width: initial;
+        }
+    }
+
+    &__profile {
+        display: flex;
+        column-gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--color-white);
+        height: 44px;
+        border-radius: 20px;
+        padding-inline: 12px;
+
+        &-metamask {
+            width: var(--icon-metamask-size);
+            height: var(--icon-metamask-size);
+        }
+
+        &-copy {
+            &-wrapper {
+                display: inline-flex;
+            }
+
+            &-icon {
+                width: var(--icon-cope-size);
+                height: var(--icon-cope-size);
+            }
+        }
+
+        &-wallet {
+            font-family: "Manrope", sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 1.14;
+            color: var(--color-main);
+
+            @media (--mobile-xs) {
+                font-size: 12px;
+            }
+        }
+    }
+}

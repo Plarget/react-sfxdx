@@ -1,0 +1,26 @@
+@import "@/shared/styles/mixin.pcss";
+@import "@/shared/styles/media.pcss";
+
+.background-body-ellipse {
+    position: absolute;
+    width: 459px;
+    height: 590px;
+    background-color: #3AC922;
+    border-radius: 50%;
+    filter: blur(100px);
+
+    @media (--tablet) {
+        width: 259px;
+        height: 390px;
+    }
+
+    @media (--mobile) {
+        width: 200px;
+        height: 350px;
+    }
+
+    @media (--mobile-xs) {
+        width: 140px;
+        height: 270px;
+    }
+}

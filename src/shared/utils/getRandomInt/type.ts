@@ -1,0 +1,1 @@
+export type TGetRandomInt = (min: number, max: number) => number;
