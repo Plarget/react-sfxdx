@@ -1,24 +1,13 @@
 import type {TConnectWallet} from "./types.ts";
-import type {FC} from "react";
+import {FC, useEffect} from "react";
 import {useState} from "react"
 import Button from "@/shared/ui/Button";
 import classNames from "classnames";
-import {BrowserProvider} from "ethers"
 import SvgIcon from "@/shared/ui/SvgIcon";
 import IconButton from "@/shared/ui/IconButton";
+import connectServices from "@/shared/services/connectServices.ts";
+import {AMOY_POLYGON_PARAMS} from "@/shared/constants/server.ts";
 import "./ConnectWallet.pcss"
-
-const AMOY_POLYGON_PARAMS = {
-  chainId: '0x13882', // замените на реальный chainId в 16-ричном формате
-  chainName: 'Polygon Amoy',
-  nativeCurrency: {
-    name: 'POL',
-    symbol: 'POL',
-    decimals: 18,
-  },
-  rpcUrls: ['https://rpc-amoy.polygon.technology'],
-  blockExplorerUrls: ['https://amoy.polygonscan.com'],
-};
 
 const ConnectWallet: FC<TConnectWallet> = (props) => {
   const {
@@ -28,62 +17,41 @@ const ConnectWallet: FC<TConnectWallet> = (props) => {
   const [account, setAccount] = useState<null | string>(null);
   const [isConnecting, setIsConnecting] = useState(false);
 
+  useEffect(() => {
+    const onAccountChanged = (accounts: string[]) => {
+      setAccount(accounts[0] || null);
+    }
+    const onChainChanged = (chain: string) => {
+      if (chain !== AMOY_POLYGON_PARAMS.chainId) location.reload()
+    }
+    if (account !== null) {
+      window.ethereum.on('accountsChanged', onAccountChanged);
+      window.ethereum.on('chainChanged', onChainChanged);
+    }
+    return () => {
+      if (account !== null) {
+        window.ethereum.off('accountsChanged', onAccountChanged);
+        window.ethereum.off('chainChanged', onChainChanged);
+      }
+    }
+  }, [account])
 
-  const isNotExistChainError = (error: unknown) => {
-    if (typeof error !== 'object' || !error) return false;
 
-    if( !('code' in error) ) return false;
-
-    return error.code === 4902
-  }
-
-  // По хорошему не должна быть тут, а так же упрощена
   const connectWallet = async () => {
     if (typeof window.ethereum === 'undefined') return alert('MetaMask не установлен!');
-
     setIsConnecting(true);
 
-    try {
-      await window.ethereum.request({method: 'eth_requestAccounts'});
-
-      const provider = new BrowserProvider(window.ethereum);
-      const signer = provider.getSigner();
-      const address = await signer.then((sign) => sign.getAddress());
-
-      const {chainId} = await provider.getNetwork();
-      const hexChainId = '0x' + chainId.toString(16);
-
-      if (hexChainId.toLowerCase() !== AMOY_POLYGON_PARAMS.chainId.toLowerCase()) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{chainId: AMOY_POLYGON_PARAMS.chainId}],
-          });
-        } catch (switchError) {
-          if (isNotExistChainError(switchError)) {
-            await window.ethereum.request({
-              method: 'wallet_addEthereumChain',
-              params: [AMOY_POLYGON_PARAMS],
-            });
-          } else {
-            throw Error()
-          }
-        }
-      }
-      setAccount(address);
-
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
-        setAccount(accounts[0] || null);
-      });
-      window.ethereum.on('chainChanged', (chain: string) => {
-      if (chain !== AMOY_POLYGON_PARAMS.chainId) location.reload()
-      });
-    } catch {
-      alert('Ошибка при подключении кошелька:');
-    } finally {
-      setIsConnecting(false);
-    }
-  };
+    connectServices.connectMetamask()
+      .then((address) => {
+        setAccount(address);
+      })
+      .catch(() => {
+        alert('Ошибка при подключении кошелька:');
+      })
+      .finally(() => {
+        setIsConnecting(false);
+      })
+  }
 
   const copyWallet = () => {
     navigator.clipboard.writeText(account || "")
