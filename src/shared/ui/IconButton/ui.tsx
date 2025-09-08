@@ -11,6 +11,7 @@ const IconButton: FC<TIconButton> = (props) => {
     ...rest
   } = props
 
+  console.log(type)
   return (
     <button
       className={classNames(className, "icon-button")}
